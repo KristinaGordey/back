@@ -94,5 +94,24 @@ export default factories.createCoreController(
             );
             return this.transformResponse(deleted);
         },
+		async popular(ctx) {
+			const limit = parseInt(ctx.query.limit as string || '5');
+			const articles = await strapi.entityService.findMany('api::article.article', {
+			filters: { views: { $gt: 0 } },
+			sort: { views: 'desc' },
+			populate: ['coverImage', 'category', 'users_permissions_user'],
+			pagination: { start: 0, limit },
+			});
+			return this.transformResponse(articles);
+		},
+		async incrementViews(ctx) {
+			const { id } = ctx.params;
+			const article = await strapi.entityService.findOne('api::article.article', id);
+			if (!article) return ctx.notFound();
+			const updated = await strapi.entityService.update('api::article.article', id, {
+			data: { views: (article.views || 0) + 1 },
+			});
+			return this.transformResponse(updated);
+		},
     })
 );
