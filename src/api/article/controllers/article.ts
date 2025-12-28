@@ -14,7 +14,11 @@ export default factories.createCoreController(
                 "api::article.article",
                 id,
                 {
-                    populate: ["coverImage", "category", "user"],
+                    populate: [
+                        "coverImage",
+                        "category",
+                        "users_permissions_user",
+                    ],
                 }
             );
 
@@ -47,7 +51,7 @@ export default factories.createCoreController(
                 "api::article.article",
                 id,
                 {
-                    populate: ["user"],
+                    populate: ["users_permissions_user"],
                 }
             )) as any;
 
