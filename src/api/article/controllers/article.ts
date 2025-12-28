@@ -39,10 +39,35 @@ export default factories.createCoreController(
                 return ctx.unauthorized("Вы не авторизованы");
             }
 
-            ctx.request.body.data.user = user.id;
+            ctx.request.body.data.users_permissions_user = user.id;
 
             return await super.create(ctx);
         },
+        async update(ctx) {
+            const { id } = ctx.params;
+            const user = ctx.state.user;
+
+            const article = (await strapi.entityService.findOne(
+                "api::article.article",
+                id,
+                { populate: ["users_permissions_user"] }
+            )) as { id: number; users_permissions_user?: { id: number } };
+
+            if (!article) return ctx.notFound("Статья не найдена");
+            if (article.users_permissions_user?.id !== user.id)
+                return ctx.forbidden("Вы не можете редактировать чужую статью");
+
+            const updated = await strapi.entityService.update(
+                "api::article.article",
+                id,
+                {
+                    data: ctx.request.body.data,
+                }
+            );
+
+            return this.transformResponse(updated);
+        },
+
         async delete(ctx) {
             const { id } = ctx.params;
             const user = ctx.state.user;
@@ -59,7 +84,7 @@ export default factories.createCoreController(
                 return ctx.notFound("Статья не найдена");
             }
 
-            if (article.user?.id !== user.id) {
+            if (article.users_permissions_user?.id !== user.id) {
                 return ctx.forbidden("Вы не можете удалить чужую статью");
             }
 
