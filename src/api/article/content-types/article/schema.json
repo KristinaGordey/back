@@ -16,7 +16,9 @@
       "required": true
     },
     "slug": {
-      "type": "uid"
+      "type": "uid",
+      "targetField": "title",
+      "required": false
     },
     "publishedDate": {
       "type": "datetime",
