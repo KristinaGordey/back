@@ -1,61 +1,45 @@
-# 🚀 Getting started with Strapi
+# Начало работы с Strapi
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+Backend-часть приложения реализована на **Strapi v5** и используется как headless CMS и API-сервер
+для frontend-приложения. Strapi отвечает за аутентификацию пользователей, управление ролями и
+правами доступа, а также за предоставление REST API.
 
-### `develop`
+В проекте используется JWT-аутентификация и плагин Users & Permissions.
+Все проверки прав доступа выполняются на стороне backend.
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+## Требования
 
-```
-npm run develop
-# or
-yarn develop
-```
+- Node.js 18+
+- npm
 
-### `start`
+## Установка
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+npm install
 
-```
-npm run start
-# or
-yarn start
-```
+##Админ-панель доступна по адресу 
 
-### `build`
+http://localhost:1337/admin
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+##Сборка
 
-```
 npm run build
-# or
-yarn build
-```
 
-## ⚙️ Deployment
+## .env
+# Server
+HOST=0.0.0.0
+PORT=1337
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+# Secrets
+APP_KEYS=your_app_keys_here
+API_TOKEN_SALT=your_api_token_salt_here
+ADMIN_JWT_SECRET=your_admin_jwt_secret_here
+TRANSFER_TOKEN_SALT=your_transfer_token_salt_here
+ENCRYPTION_KEY=your_encryption_key_here
 
-```
-yarn strapi deploy
-```
+# Database
+DATABASE_CLIENT=sqlite
+DATABASE_FILENAME=.tmp/data.db
+JWT_SECRET=your_jwt_secret_here
 
-## 📚 Learn more
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
