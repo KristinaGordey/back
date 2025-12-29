@@ -36,7 +36,18 @@ export default factories.createCoreController(
 
             ctx.request.body.data.users_permissions_user = user.id;
 
-            return await super.create(ctx);
+            const created = await super.create(ctx);
+
+			await strapi.entityService.create("api::audit-log.audit-log", { 
+				data: { 
+					action: "create", 
+					entity: "article", 
+					entityId: created.data.id, 
+					users_permissions_user: user.id, 
+					timestamp: new Date().toISOString(), 
+				}, 
+			}); 
+			return created;
         },
         async update(ctx) {
             const { id } = ctx.params;
@@ -59,6 +70,16 @@ export default factories.createCoreController(
                     data: ctx.request.body.data,
                 }
             );
+
+			await strapi.entityService.create("api::audit-log.audit-log", {
+				 data: { 
+					action: "update", 
+					entity: "article", 
+					entityId: id, 
+					users_permissions_user: user.id, 
+					timestamp: new Date().toISOString(), 
+				}, 
+			});
 
             return this.transformResponse(updated);
         },
@@ -87,6 +108,17 @@ export default factories.createCoreController(
                 "api::article.article",
                 id
             );
+
+			await strapi.entityService.create("api::audit-log.audit-log", { 
+				data: { 
+					action: "delete", 
+					entity: "article", 
+					entityId: id, 
+					users_permissions_user: user.id,
+					timestamp: new Date().toISOString(), 
+				}, 
+			});
+
             return this.transformResponse(deleted);
         },
         async popular(ctx) {
@@ -94,7 +126,7 @@ export default factories.createCoreController(
             const articles = await strapi.entityService.findMany(
                 "api::article.article",
                 {
-                    filters: { views: { $gt: 0 } },
+                    filters: { views: { $gt: 5 } },
                     sort: { views: "desc" },
                     populate: [
                         "coverImage",
