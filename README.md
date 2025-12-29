@@ -25,6 +25,7 @@ http://localhost:1337/admin
 npm run build
 
 ## .env
+```
 # Server
 HOST=0.0.0.0
 PORT=1337
@@ -40,6 +41,6 @@ ENCRYPTION_KEY=your_encryption_key_here
 DATABASE_CLIENT=sqlite
 DATABASE_FILENAME=.tmp/data.db
 JWT_SECRET=your_jwt_secret_here
-
+```
 
 
