@@ -44,9 +44,6 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "articles"
     },
-    "content": {
-      "type": "text"
-    },
     "readingTime": {
       "type": "integer",
       "default": 0
@@ -56,6 +53,13 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "articles"
+    },
+    "excerpt": {
+      "type": "text",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
     }
   }
 }
